@@ -4,15 +4,13 @@ from __future__ import division
 from __future__ import absolute_import
 
 import numpy as np
+from keras import backend as K
 
 
 def whitening(image):
     """Whitening. Normalises image to zero mean and unit variance."""
-
-    image = image.astype(np.float32)
-
-    mean = np.mean(image)
-    std = np.std(image)
+    mean = K.mean(image)
+    std = K.std(image)
 
     if std > 0:
         ret = (image - mean) / std
@@ -23,11 +21,8 @@ def whitening(image):
 
 def normalise_zero_one(image):
     """Image normalisation. Normalises image to fit [0, 1] range."""
-
-    image = image.astype(np.float32)
-
-    minimum = np.min(image)
-    maximum = np.max(image)
+    minimum = K.min(image)
+    maximum = K.max(image)
 
     if maximum > minimum:
         ret = (image - minimum) / (maximum - minimum)
